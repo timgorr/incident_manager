@@ -8,7 +8,6 @@ from stix_interface import create_stix_package
 app = Flask(__name__)
 app.config.from_object('config.Config')
 
-# JSON schema as defined previously
 schema = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "description": "This document records the details of an incident",

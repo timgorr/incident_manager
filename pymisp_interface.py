@@ -5,7 +5,7 @@ def send_to_misp(misp_url, misp_key, data):
     misp_key = 'dein_auth_schluessel'
     pymisp = PyMISP(misp_url, misp_key, ssl=True)  # Adjust SSL based on your environment (https: ssl = true)
 
-    # Create a new event
+    # Create new event
     event = MISPEvent()
     event.info = data.get('report_type', 'No report type provided')
     event.distribution = 0  # Set as per your MISP configuration
