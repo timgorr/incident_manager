@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, g
+from flask import Flask, request, jsonify, g, render_template
 import sqlite3
 from jsonschema import validate, ValidationError
 import models
@@ -34,6 +34,20 @@ schema = {
                  "ip_protocol_number", "ip_version"]
 }
 
+
+@app.route('/')
+def home():
+    return 'Moin!'
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
+    # return app.send_static_file('favicon.ico')
+
+@app.route('/report-form')
+def show_report_form():
+    return render_template('report_form.html')
+
 @app.route('/api/report', methods=['POST'])
 def handle_report():
     data = request.get_json()
@@ -64,7 +78,7 @@ def handle_report():
 def handle_siem_report():
     data = request.get_json()
     try:
-        validate(instance=data, schema=schema)  # Validate data
+        validate(instance=data, schema=schema)
         models.add_report(data)
         response_misp = send_to_misp(data)
         stix_package = create_stix_package(data)
